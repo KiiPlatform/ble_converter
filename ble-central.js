@@ -8,8 +8,11 @@ var util = require('util');
 var winston = require('winston');
 winston.level = 'error';
 
+// key is vendorThingID, value is peripheral
 var peripheralMap = {};
-var bleBlLastUpdates = {};
+
+// record latest time when receive advertisement data from those unconnectable peripheral
+var peripheralLastUpdates = {};
 
 function indexOf(peripheral) {
   var key = Object.keys(peripheralMap).filter(function(peripheral) {return peripheralMap[key] === peripheral})[0];
@@ -34,14 +37,13 @@ BLECentral.prototype.start = function(){
   var onDiscover = function(peripheral) {
     var localName = peripheral.advertisement.localName;
     var deviceId = peripheral.id;
-    var endnode;
     if (localName === 'BLECAST_BL' || localName === 'BLECAST_BL\u0000') {
       temp = new BlecastBL(peripheral);
       peripheralMap[deviceId] = temp;
-      if (bleBlLastUpdates[deviceId] === null || bleBlLastUpdates[deviceId] === undefined) {
+      if (peripheralLastUpdates[deviceId] === null || peripheralLastUpdates[deviceId] === undefined) {
         that.emit("endnodeConnect", deviceId);
       }
-      bleBlLastUpdates[deviceId] = Date.now();
+      peripheralLastUpdates[deviceId] = Date.now();
       winston.debug("Found BLECAST_BL, vendorThingID:"+temp.vendorThingID+", states:"+JSON.stringify(temp.states));
       that.emit("endnodeUpdateStates", deviceId, temp.states);
 
@@ -86,14 +88,14 @@ BLECentral.prototype.start = function(){
   noble.on('discover', onDiscover);
   // check updates of blecast_bl
   var onTimeUp = function(){
-    for (var key in bleBlLastUpdates) {
-      var updated = bleBlLastUpdates[key];
+    for (var key in peripheralLastUpdates) {
+      var updated = peripheralLastUpdates[key];
       var now = Date.now();
       var diff = (now - updated)/1000;
       // if last update of blecast_bl longer than 10 seconds, then report disconnection
       if (diff > 10) {
         delete peripheralMap[key];
-        delete bleBlLastUpdates[key];
+        delete peripheralLastUpdates[key];
         that.emit("endnodeDisconnect", key);
       }
     }
