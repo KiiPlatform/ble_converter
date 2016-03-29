@@ -1,5 +1,7 @@
-var Client = require('./gw-mqtt-client.js');
-var BleCentral = require('./ble-central.js');
+#!/usr/bin/env node
+
+var Client = require('./lib/gw-mqtt-client.js');
+var BleCentral = require('./lib/ble-central.js');
 var bleCentral = new BleCentral();
 
 // set log level to see the information

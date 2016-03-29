@@ -2,7 +2,9 @@
   "name": "ble-converter",
   "version": "0.1.0",
   "description": "a converter sitting between Kii gateway-agent and end-nodes communicates with gateway-agent by MQTT, and communicate with end-node by Bluetooth Low Energy.",
-  "main": "ble-converter.js",
+  "bin": {
+    "ble-converter": "./ble-converter.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/KiiPlatform/ble_converter"
