@@ -1,8 +1,8 @@
 A converter sitting between Kii gateway-agent and end-nodes communicates with gateway-agent by MQTT, and communicate with end-node by Bluetooth Low Energy(BLE).
 
 ## Supported BLE devices
-- BLECAST_BL. A BLE enable illuminance sensor(http://www.robotsfx.com/robot/BLECAST_BL.html), which is not connectable, and advertise the illuminance data.
-- Nexturn LED Bulb. A bulb enable you to get color or change color through BLE(http://ascii.jp/elem/000/000/902/902659/).
+- BLECAST_BL. A BLE enable illuminance sensor, which is not connectable, and advertise the illuminance data. [Home Page of this device](http://www.robotsfx.com/robot/BLECAST_BL.html).
+- Nexturn LED Bulb. A bulb enable you to get color or change color through BLE. [Introduction page of this device](http://ascii.jp/elem/000/000/902/902659/).
 
 ## Install dependencies
 
