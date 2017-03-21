@@ -60,7 +60,6 @@ client.on('commands', function(vid, commands){
       winston.debug("update command results succeeded");
       bleCentral.getStates(vid, function(err, state){
         if (err === null || err === undefined) {
-          winston.debug("state of endnode:"+JSON.stringify(state));
           client.updateStates(vid, state, function(err){
             if (err !== null && err !== undefined){
               winston.error("update state of endnode faild:"+err);
@@ -93,7 +92,7 @@ bleCentral.on('endnodeConnect', function(vid){
     if (err !== null && err !== undefined){
       winston.error("report connection of endnode("+ vid+") failed:"+err);
     }else{
-      winston.debug("eport connection of endnode("+ vid+") succeeded.");
+      winston.debug("report connection of endnode("+ vid+") succeeded.");
     }
   });
 });
